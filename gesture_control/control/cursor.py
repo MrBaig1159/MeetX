@@ -64,6 +64,10 @@ class CursorController:
     def _distance(self, p1, p2):
         dx, dy = p1[0] - p2[0], p1[1] - p2[1]
         return (dx**2 + dy**2) ** 0.5
+    
+    def _should_click(self, thumb_pos, index_pos):
+        distance = self._distance(thumb_pos, index_pos)
+        return distance < self.config.CLICK_THRESHOLD and self._click_ready()
 
     def _click_ready(self):
         return time.time() - self.last_click_time > self.config.CLICK_COOLDOWN
